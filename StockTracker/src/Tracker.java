@@ -42,9 +42,12 @@ public class Tracker extends Subject{
 	}
 	
 	// Strategy Pattern	
-	public void setStrategy(Strategy s){
-		this.strategy = s;
-		this.strategy.getRecommendation();
+	public void setStrategy(Strategy strategy){
+		this.strategy = strategy;
+	}
+	
+	public void getAdvice(){
+		strategy.getRecommendation();
 	}
 			
 }
