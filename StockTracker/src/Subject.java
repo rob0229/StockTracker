@@ -5,4 +5,11 @@ public abstract class Subject {
 	
 	// Method to notify observers of change
 	public void notifyObservers(){}
+	
+	
+	Strategy strategy;
+	
+	public Subject() {}
+	public void setStrategy(Strategy s){}
+	
 }
