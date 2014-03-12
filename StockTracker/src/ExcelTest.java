@@ -15,6 +15,7 @@ public class ExcelTest {
 
 	ExcelTest() {
 		try {
+			// Load the JDBC-ODBC bridge driver
 			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
 			// Need to configure ODBC
 			Connection con = DriverManager.getConnection("jdbc:odbc:COSC330");
