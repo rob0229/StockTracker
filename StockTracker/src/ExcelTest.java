@@ -89,12 +89,10 @@ public class ExcelTest {
 
 				String generate_URL = "http://finance.yahoo.com/d/quotes.txt?s="
 						+ cell.getStringCellValue() + "&f=sl1c1p2d1t1hgpvn";
-
-				URL data = new URL(generate_URL);
-				URLConnection yc = data.openConnection();
-				BufferedReader in = new BufferedReader(new InputStreamReader(
-						yc.getInputStream()));
-				String inputLine = in.readLine();
+				URL yahoo = new URL(generate_URL);
+		        BufferedReader in = new BufferedReader(
+		        new InputStreamReader(yahoo.openStream()));
+		        String inputLine = in.readLine();
 
 				// Put results into first column
 				cell = row.getCell(0);
