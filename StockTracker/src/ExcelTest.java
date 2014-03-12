@@ -1,8 +1,6 @@
 import java.net.URL;
-import java.net.URLConnection;
 import java.sql.*;
 import java.io.*;
-import java.util.*;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -70,49 +68,49 @@ public class ExcelTest {
 	}
 
 	public void update() {
-		try {
-			System.out.println("Updating " + totalrows + " stocks");
-			
-			// Read in file
-			FileInputStream file = new FileInputStream(new File("Stocks.xls"));
-
-			// Get the workbook instance for XLS file
-			HSSFWorkbook workbook = new HSSFWorkbook(file);
-
-			// Get first sheet from the workbook
-			HSSFSheet sheet = workbook.getSheetAt(0);
-
-			// Rows start at 0, cells start at 0
-			for (int i = 1; i < totalrows + 1; i++) {
-				HSSFRow row = sheet.getRow(i);
-				HSSFCell cell = row.getCell(1);
-
-				String generate_URL = "http://finance.yahoo.com/d/quotes.txt?s="
-						+ cell.getStringCellValue() + "&f=sl1c1p2d1t1hgpvn";
-				URL yahoo = new URL(generate_URL);
-		        BufferedReader in = new BufferedReader(
-		        new InputStreamReader(yahoo.openStream()));
-		        String inputLine = in.readLine();
-
-				// Put results into first column
-				cell = row.getCell(0);
-				cell.setCellValue(inputLine);
-				// System.out.println(cell.getStringCellValue());
-				System.out.print(i + " ");
-			}
-			System.out.println("");
-			FileOutputStream fileOut = new FileOutputStream("Stocks.xls");
-			workbook.write(fileOut);
-			fileOut.close();
-			file.close();
-
-			System.out.println("Done");
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			System.out.println("Updating " + totalrows + " stocks");
+//			
+//			// Read in file
+//			FileInputStream file = new FileInputStream(new File("Stocks.xls"));
+//
+//			// Get the workbook instance for XLS file
+//			HSSFWorkbook workbook = new HSSFWorkbook(file);
+//
+//			// Get first sheet from the workbook
+//			HSSFSheet sheet = workbook.getSheetAt(0);
+//
+//			// Rows start at 0, cells start at 0
+//			for (int i = 1; i < totalrows + 1; i++) {
+//				HSSFRow row = sheet.getRow(i);
+//				HSSFCell cell = row.getCell(1);
+//
+//				String generate_URL = "http://finance.yahoo.com/d/quotes.txt?s="
+//						+ cell.getStringCellValue() + "&f=sl1c1p2d1t1hgpvn";
+//				URL yahoo = new URL(generate_URL);
+//		        BufferedReader in = new BufferedReader(
+//		        new InputStreamReader(yahoo.openStream()));
+//		        String inputLine = in.readLine();
+//
+//				// Put results into first column
+//				cell = row.getCell(0);
+//				cell.setCellValue(inputLine);
+//				// System.out.println(cell.getStringCellValue());
+//				System.out.print(i + " ");
+//			}
+//			System.out.println("");
+//			FileOutputStream fileOut = new FileOutputStream("Stocks.xls");
+//			workbook.write(fileOut);
+//			fileOut.close();
+//			file.close();
+//
+//			System.out.println("Done");
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 
 		try {
 			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
