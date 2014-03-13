@@ -6,7 +6,7 @@ import javax.swing.border.TitledBorder;
 
 public class StockGUI extends JFrame {
 	private String[] symbolNameHeader = {"Symbol Name"};
-	private Object[][] symbolName = {{"GOOGL", "APPL"}};
+	private Object[][] symbolName = {{"GOOGL"},{ "APPL"}, };
 	JPanel stockListPanel1;
 	JPanel strategyPanel2;
 	JPanel stockDisplayPanel3;
@@ -21,14 +21,15 @@ public class StockGUI extends JFrame {
 	}
 	
 	public void init(){
-		symbolTable = new JTable(symbolName, symbolNameHeader ) ;
+		symbolTable = new JTable(excelData.getStockList(), symbolNameHeader) ;
 		stockListPanel1 = new JPanel();
 		strategyPanel2 = new JPanel();
 		stockDisplayPanel3 = new JPanel();		    
 		stockTable = new JTable(excelData.getStockList(), excelData.getColumnNames());		
 		displayScrollPane = new JScrollPane(stockTable);		
-		stockScrollPane = new JScrollPane();
-			
+		stockScrollPane = new JScrollPane(symbolTable);
+		
+		stockListPanel1.add(stockScrollPane);
 		stockDisplayPanel3.add(displayScrollPane);
 		
 		stockListPanel1.setBorder(BorderFactory.createTitledBorder(null, "Stock List Panel", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION));		
@@ -41,22 +42,21 @@ public class StockGUI extends JFrame {
 		getContentPane().setLayout(layout);
 		
 		layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)		
-			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)				
+				.addGap(50)
+				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)				
 				.addComponent(stockDisplayPanel3, GroupLayout.PREFERRED_SIZE, 1000, GroupLayout.PREFERRED_SIZE)	
 				.addGroup(layout.createSequentialGroup()
-					.addComponent(stockListPanel1, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)
-						.addComponent(strategyPanel2, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)
-						
-			)));
+					.addComponent(stockScrollPane, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
+					.addGap(200)
+						.addComponent(strategyPanel2, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE))));
 		
 		layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)	
 			.addGroup(layout.createSequentialGroup()
 					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-				.addComponent(stockListPanel1, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)	
+				.addComponent(stockScrollPane, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)	
 				.addComponent(strategyPanel2, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE))
 			
-				.addComponent(stockDisplayPanel3, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
-				));
+				.addComponent(stockDisplayPanel3, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)));
 		
 		setResizable(false);
 		pack();
