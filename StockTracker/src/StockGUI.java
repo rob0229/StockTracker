@@ -1,17 +1,19 @@
+import java.awt.GridLayout;
+
 import javax.swing.*;
-import javax.swing.GroupLayout;
-import javax.swing.SwingUtilities;
+import javax.swing.border.TitledBorder;
 
 public class StockGUI extends JFrame {
-	JPanel stockList;
-	JPanel strategyList;
-	JPanel stockDisplay;
 	
+	JPanel stockListPanel1;
+	JPanel strategyPanel2;
+	JPanel stockDisplayPanel3;
+	JTable stockTable;
 	ExcelTest excelData = new ExcelTest();	
 	JScrollPane displayScrollPane;
 	JScrollPane stockScrollPane;
 	
-	//Object[][] data = {{"Google", "12345", "12346", "1", "Hold"}, {"APPL", "23456", "23457", "1", "Hold"}};
+	
 	
 	StockGUI(){		
 		init();		
@@ -19,47 +21,46 @@ public class StockGUI extends JFrame {
 	
 	public void init(){
 		
-		stockList = new JPanel();
-		strategyList = new JPanel();
-		stockDisplay = new JPanel();
-		
-	    
-	    
-		JTable stockTable = new JTable(excelData.getStockList(), excelData.getColumnNames());
+		stockListPanel1 = new JPanel();
+		strategyPanel2 = new JPanel();
+		stockDisplayPanel3 = new JPanel();
+		    
+		//stockTable = new JTable(excelData.getStockList(), excelData.getColumnNames());
 		displayScrollPane = new JScrollPane(stockTable);
-		stockScrollPane = new JScrollPane(stockList);
-		
-		stockDisplay.add(displayScrollPane);
+		stockScrollPane = new JScrollPane(stockListPanel1);
 		
 		
-		/*
-
-		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+		
+		stockListPanel1.setBorder(BorderFactory.createTitledBorder(null, "Stock List Panel", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION));		
+		strategyPanel2.setBorder(BorderFactory.createTitledBorder(null, "Strategy Panel", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION));
+		stockDisplayPanel3.setBorder(BorderFactory.createTitledBorder(null, "Stock Display Panel", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION));
+		
+		GroupLayout layout = new GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
 		
-		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addComponent(stockList)
-				.addComponent(strategyList)
-				.addComponent(stockDisplay));
-
-		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addComponent(stockList)
-				.addComponent(strategyList)
-				.addComponent(stockDisplay));
-		*/
-		setSize(1000,600);
-
+		layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)		
+			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)				
+				.addComponent(stockDisplayPanel3, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)	
+				.addGroup(layout.createSequentialGroup()
+					.addComponent(stockListPanel1, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
+						.addComponent(strategyPanel2, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
+						
+			)));
 		
-		add(strategyList);
-		add(stockList);
-		add(stockDisplay);
-		stockList.setVisible(true);
-		strategyList.setVisible(true);
-		stockDisplay.setVisible(true);
-		setVisible(true);
-	
-		//pack();
-		
+		layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)	
+			.addGroup(layout.createSequentialGroup()
+					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+				.addComponent(stockListPanel1, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)	
+				.addComponent(strategyPanel2, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE))
+			
+				.addComponent(stockDisplayPanel3, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
+				));
+			
+		//stockDisplayPanel.setSize(400,200);		
+		//strategyPanel.setSize(200,200);
+		//stockListPanel.setSize(200,200);
+		//setSize(1200,600);
+		pack();
 		
 	}
 	

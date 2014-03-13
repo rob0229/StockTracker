@@ -11,7 +11,7 @@ public class ExcelTest {
 	protected String[] rawdata;
 	protected int totalrows;
 	protected int totalcols;
-	protected static String[][] stockList; //= {{"stuff", "1", "2","3","4", "5", "6", "7", "8", "9"}, {"more stuff", "1","2","3","4", "5", "6", "7", "8", "9"}};
+	protected static String[][] stockList; 
 	protected static String[] columnNames = {"Stock Symbol", "Current Price", "Change", "Change in %", "Date", "Time", "High", "Low", "Yesterdays Close", "Volume","Name"};
 	
 	
@@ -64,14 +64,14 @@ public class ExcelTest {
 			stockList[i] = rawdata[i].split(",");
 		}
 
-//		// Printed Array
-//		for (int i = 0; i < totalrows; i++) {
-//			for (int j = 0; j < totalcols; j++) {
-//				stockList[i][j] = (stockList[i][j]).replace("\"", "");
-//				System.out.print(stockList[i][j] + " ");
-//			}
-//			System.out.println("");
-//		}
+		// Printed Array
+		for (int i = 0; i < totalrows; i++) {
+			for (int j = 0; j < totalcols; j++) {
+				stockList[i][j] = (stockList[i][j]).replace("\"", "");
+				System.out.print(stockList[i][j] + " ");
+			}
+			System.out.println("");
+		}
 	}
 
 	public void update() {
