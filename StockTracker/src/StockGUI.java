@@ -5,11 +5,13 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 public class StockGUI extends JFrame {
-	
+	private String[] symbolNameHeader = {"Symbol Name"};
+	private Object[][] symbolName = {{"GOOGL", "APPL"}};
 	JPanel stockListPanel1;
 	JPanel strategyPanel2;
 	JPanel stockDisplayPanel3;
 	JTable stockTable;
+	JTable symbolTable; 
 	ExcelTest excelData = new ExcelTest();	
 	JScrollPane displayScrollPane;
 	JScrollPane stockScrollPane;
@@ -19,7 +21,7 @@ public class StockGUI extends JFrame {
 	}
 	
 	public void init(){
-		
+		symbolTable = new JTable(symbolName, symbolNameHeader ) ;
 		stockListPanel1 = new JPanel();
 		strategyPanel2 = new JPanel();
 		stockDisplayPanel3 = new JPanel();		    
