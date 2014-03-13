@@ -11,9 +11,13 @@ public class ExcelTest {
 	protected String[] rawdata;
 	protected int totalrows;
 	protected int totalcols;
-	protected String[][] stocklist;
-
+	protected static String[][] stockList; //= {{"stuff", "1", "2","3","4", "5", "6", "7", "8", "9"}, {"more stuff", "1","2","3","4", "5", "6", "7", "8", "9"}};
+	protected static String[] columnNames = {"Stock Symbol", "Current Price", "Change", "Change in %", "Date", "Time", "High", "Low", "Yesterdays Close", "Volume","Name"};
+	
+	
 	ExcelTest() {
+		
+		
 		try {
 			// Load the JDBC-ODBC bridge driver
 			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
@@ -50,22 +54,24 @@ public class ExcelTest {
 		}
 		
 		rawdata = new String[totalrows + 1];
-		stocklist = new String[totalrows][];
+		stockList = new String[totalrows][];
+		update();
+		sortArray();
 	}
 
 	public void sortArray() {
 		for (int i = 0; i < totalrows; i++) {
-			stocklist[i] = rawdata[i].split(",");
+			stockList[i] = rawdata[i].split(",");
 		}
 
-		// Printed Array
-		for (int i = 0; i < totalrows; i++) {
-			for (int j = 0; j < totalcols; j++) {
-				stocklist[i][j] = stocklist[i][j].replace("\"", "");
-				System.out.print(stocklist[i][j] + " ");
-			}
-			System.out.println("");
-		}
+//		// Printed Array
+//		for (int i = 0; i < totalrows; i++) {
+//			for (int j = 0; j < totalcols; j++) {
+//				stockList[i][j] = (stockList[i][j]).replace("\"", "");
+//				System.out.print(stockList[i][j] + " ");
+//			}
+//			System.out.println("");
+//		}
 	}
 
 	public void update() {
@@ -136,13 +142,28 @@ public class ExcelTest {
 		}
 
 	}
-
-	public static void main(String[] args) {
-		ExcelTest run = new ExcelTest();
-		// Always update and then sort
-		run.update();
-		run.sortArray();
-
+	
+	//getter for stock list
+	public Object[][] getStockList(){
+		Object[][] stockObject = new Object[totalrows][totalcols];
+		
+		for (int i = 0; i < totalrows; i++) {
+			for (int j = 0; j < totalcols; j++) {
+				stockObject[i][j] = stockList[i][j];
+				System.out.print(stockObject[i][j] + " ");
+			}
+			System.out.println("");
+		}
+		return stockObject;
+		
+	}
+	
+	//getter for column names
+	public String[] getColumnNames(){
+		return columnNames;
 	}
 
+	
+
+	
 }
