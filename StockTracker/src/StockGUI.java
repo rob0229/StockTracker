@@ -1,3 +1,4 @@
+import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.*;
@@ -13,8 +14,6 @@ public class StockGUI extends JFrame {
 	JScrollPane displayScrollPane;
 	JScrollPane stockScrollPane;
 	
-	
-	
 	StockGUI(){		
 		init();		
 	}
@@ -23,27 +22,28 @@ public class StockGUI extends JFrame {
 		
 		stockListPanel1 = new JPanel();
 		strategyPanel2 = new JPanel();
-		stockDisplayPanel3 = new JPanel();
-		    
-		//stockTable = new JTable(excelData.getStockList(), excelData.getColumnNames());
-		displayScrollPane = new JScrollPane(stockTable);
-		stockScrollPane = new JScrollPane(stockListPanel1);
-		
-		
+		stockDisplayPanel3 = new JPanel();		    
+		stockTable = new JTable(excelData.getStockList(), excelData.getColumnNames());		
+		displayScrollPane = new JScrollPane(stockTable);		
+		stockScrollPane = new JScrollPane();
+			
+		stockDisplayPanel3.add(displayScrollPane);
 		
 		stockListPanel1.setBorder(BorderFactory.createTitledBorder(null, "Stock List Panel", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION));		
 		strategyPanel2.setBorder(BorderFactory.createTitledBorder(null, "Strategy Panel", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION));
 		stockDisplayPanel3.setBorder(BorderFactory.createTitledBorder(null, "Stock Display Panel", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION));
+		
+		displayScrollPane.setPreferredSize(new Dimension(900,160));
 		
 		GroupLayout layout = new GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
 		
 		layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)		
 			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)				
-				.addComponent(stockDisplayPanel3, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)	
+				.addComponent(stockDisplayPanel3, GroupLayout.PREFERRED_SIZE, 1000, GroupLayout.PREFERRED_SIZE)	
 				.addGroup(layout.createSequentialGroup()
-					.addComponent(stockListPanel1, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
-						.addComponent(strategyPanel2, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
+					.addComponent(stockListPanel1, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)
+						.addComponent(strategyPanel2, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)
 						
 			)));
 		
@@ -55,11 +55,8 @@ public class StockGUI extends JFrame {
 			
 				.addComponent(stockDisplayPanel3, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
 				));
-			
-		//stockDisplayPanel.setSize(400,200);		
-		//strategyPanel.setSize(200,200);
-		//stockListPanel.setSize(200,200);
-		//setSize(1200,600);
+		
+		setResizable(false);
 		pack();
 		
 	}
