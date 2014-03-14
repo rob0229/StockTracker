@@ -151,9 +151,9 @@ public class ExcelTest {
 		for (int i = 0; i < totalrows; i++) {
 			for (int j = 0; j < totalcols; j++) {
 				stockObject[i][j] = stockList[i][j];
-				System.out.print(stockObject[i][j] + " ");
+//				System.out.print(stockObject[i][j] + " ");
 			}
-			System.out.println("");
+//			System.out.println("");
 		}
 		return stockObject;
 		
