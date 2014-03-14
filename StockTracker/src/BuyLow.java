@@ -7,10 +7,10 @@ public class BuyLow implements Strategy{
 		// Holds otherwise
 		float percent = ExcelTest.getPercentChange(stockIndex);
 		
-		if(percent < -5){
+		if(percent < -1){
 			return "Buy";
 		}
-		else if(percent > 5){
+		else if(percent > 0){
 			return "Sell";
 		}
 		else{
