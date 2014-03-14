@@ -8,7 +8,7 @@ public class Update {
 	    final StockGUI gui = new StockGUI(excel.getStockList(), excel.getColumnNames());
 	    gui.setVisible(true);
 		
-		int period = 10 * 1000; // repeat every 60 sec
+		int period = 30 * 1000; // repeat every 60 sec
 
 	    Timer timer = new Timer();
 	    timer.scheduleAtFixedRate(new TimerTask()
