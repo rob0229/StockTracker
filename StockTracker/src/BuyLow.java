@@ -5,10 +5,10 @@ public class BuyLow implements Strategy{
 		// Sells if the change (last – close) is greater than 5%
 		// Holds otherwise
 		
-		if(percent < -2){
+		if(percent < -5){
 			return "Buy";
 		}
-		else if(percent > 0){
+		else if(percent > 5){
 			return "Sell";
 		}
 		else{
