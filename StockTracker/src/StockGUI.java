@@ -1,18 +1,24 @@
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JToggleButton;
+import javax.swing.KeyStroke;
 import javax.swing.LayoutStyle;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
@@ -22,10 +28,9 @@ import javax.swing.table.DefaultTableModel;
 
 public class StockGUI extends JFrame {
 	//menu bar
-	private javax.swing.JMenu menuFile;
-    private javax.swing.JMenu menuEdit;
-    private javax.swing.JMenuBar jMenuBar1;
-	
+	private JMenu menuAbout; 
+    private JMenuBar menuBar;
+    private JMenuItem menuItem;
 	// Title for stock list
 	private String[] symbolNameHeader = {"Symbol Name"};
 	// Keeps track of selected items in list
@@ -64,9 +69,9 @@ public class StockGUI extends JFrame {
 	}
 	
 	public void init( final Object[][] addedList, final Object[] getColumns){
-		 jMenuBar1 = new javax.swing.JMenuBar();
-	        menuFile = new javax.swing.JMenu();
-	        menuEdit = new javax.swing.JMenu();
+		 menuBar = new JMenuBar();
+	     menuAbout = new JMenu("About");
+	        
 		stockListPanel1 = new JPanel();
 		strategyPanel = new JPanel();
 		stockDisplayPanel = new JPanel();	
@@ -185,18 +190,33 @@ public class StockGUI extends JFrame {
 		strategyPanel.add(buyRandomButton);
 		strategyPanel.add(buyCustomButton);
 		
-		 	menuFile.setText("File");
-	        jMenuBar1.add(menuFile);
-	        menuEdit.setText("Edit");
-	        jMenuBar1.add(menuEdit);
-	        setJMenuBar(jMenuBar1);
+		 	
+	        
+	        menuAbout.setMnemonic(KeyEvent.VK_A);
+	        menuAbout.getAccessibleContext().setAccessibleDescription(
+	                "The only menu in this program that has menu items");
+	        
+	        menuBar.add(menuAbout);
+	        
+	      //Adds programmer names with a icon to the about menu
+	        menuItem = new JMenuItem("Charlie Sun",
+                    new ImageIcon("src/sun.jpg"));
+	        	menuItem.setMnemonic(KeyEvent.VK_S);
+	        	
+	        menuAbout.add(menuItem);
+	        	menuItem = new JMenuItem("Rob Close",
+	                        new ImageIcon("src/close.png"));
+	    	        	menuItem.setMnemonic(KeyEvent.VK_C);
+	    	        		menuAbout.add(menuItem);
+	    	        		
+	       //adds menu bar to jframe 
+	       setJMenuBar(menuBar);
 		
 		 GroupLayout stratPanelLayout = new GroupLayout(strategyPanel);
 		 strategyPanel.setLayout(stratPanelLayout);
 	        stratPanelLayout.setHorizontalGroup(
 	            stratPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
 	            .addGroup(stratPanelLayout.createSequentialGroup()
-	                .addGap(28, 28, 28)
 	                .addGroup(stratPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
 	                    .addComponent(buyCustomButton)
 	                    .addComponent(buyRandomButton)
@@ -207,7 +227,7 @@ public class StockGUI extends JFrame {
 	        stratPanelLayout.setVerticalGroup(
 	            stratPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
 	            .addGroup(stratPanelLayout.createSequentialGroup()
-	                .addGap(21, 21, 21)
+	                .addGap(20, 20, 20)
 	                .addComponent(buyLowButton)
 	                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
 	                .addComponent(buyRiseButton)
@@ -242,8 +262,7 @@ public class StockGUI extends JFrame {
 		            		.addContainerGap(23, Short.MAX_VALUE)
 		                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 		                    .addGroup(layout.createSequentialGroup()
-		                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-		                        		
+		                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)	
 		                            .addComponent(strategyPanel, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
 		                            .addComponent(stockScrollPane, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
 		                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED))
