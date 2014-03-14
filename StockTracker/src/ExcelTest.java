@@ -186,4 +186,9 @@ public class ExcelTest {
 		
 	}
 	
+	public static float getVolume(int i){
+		
+		return Float.valueOf(stockList[i][9]);
+	}
+	
 }

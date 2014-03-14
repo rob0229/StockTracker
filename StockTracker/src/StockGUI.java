@@ -13,6 +13,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JToggleButton;
+import javax.swing.LayoutStyle;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -20,6 +21,11 @@ import javax.swing.table.DefaultTableModel;
 
 
 public class StockGUI extends JFrame {
+	//menu bar
+	private javax.swing.JMenu menuFile;
+    private javax.swing.JMenu menuEdit;
+    private javax.swing.JMenuBar jMenuBar1;
+	
 	// Title for stock list
 	private String[] symbolNameHeader = {"Symbol Name"};
 	// Keeps track of selected items in list
@@ -41,8 +47,8 @@ public class StockGUI extends JFrame {
 	private boolean clickedStrategy = false;
 	
 	JPanel stockListPanel1;
-	JPanel strategyPanel2;
-	JPanel stockDisplayPanel3;
+	JPanel strategyPanel;
+	JPanel stockDisplayPanel;
 	JTable stockTable;
 	JTable symbolTable; 
 	JScrollPane displayScrollPane;
@@ -58,9 +64,12 @@ public class StockGUI extends JFrame {
 	}
 	
 	public void init( final Object[][] addedList, final Object[] getColumns){
+		 jMenuBar1 = new javax.swing.JMenuBar();
+	        menuFile = new javax.swing.JMenu();
+	        menuEdit = new javax.swing.JMenu();
 		stockListPanel1 = new JPanel();
-		strategyPanel2 = new JPanel();
-		stockDisplayPanel3 = new JPanel();	
+		strategyPanel = new JPanel();
+		stockDisplayPanel = new JPanel();	
 		
 		//Strategy Radio Buttons
 		buyLowButton = new JRadioButton("Buy when stock price decreases");
@@ -97,11 +106,11 @@ public class StockGUI extends JFrame {
 		stockScrollPane = new JScrollPane(symbolTable);
 		
 		stockListPanel1.add(stockScrollPane);
-		stockDisplayPanel3.add(displayScrollPane);
+		stockDisplayPanel.add(displayScrollPane);
 		
 		stockListPanel1.setBorder(BorderFactory.createTitledBorder(null, "Stock List Panel", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION));		
-		strategyPanel2.setBorder(BorderFactory.createTitledBorder(null, "Strategy Panel", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION));
-		stockDisplayPanel3.setBorder(BorderFactory.createTitledBorder(null, "Stock Display Panel", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION));
+		strategyPanel.setBorder(BorderFactory.createTitledBorder(null, "Strategy Panel", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION));
+		stockDisplayPanel.setBorder(BorderFactory.createTitledBorder(null, "Stock Display Panel", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION));
 		
 		displayScrollPane.setPreferredSize(new Dimension(980,160));
 		
@@ -171,42 +180,86 @@ public class StockGUI extends JFrame {
 		buyRandomButton.addActionListener(myListener);
 		buyCustomButton.addActionListener(myListener);
 		
-		strategyPanel2.add(buyLowButton);
-		strategyPanel2.add(buyRiseButton);
-		strategyPanel2.add(buyRandomButton);
-		strategyPanel2.add(buyCustomButton);
+		strategyPanel.add(buyLowButton);
+		strategyPanel.add(buyRiseButton);
+		strategyPanel.add(buyRandomButton);
+		strategyPanel.add(buyCustomButton);
+		
+		 	menuFile.setText("File");
+	        jMenuBar1.add(menuFile);
+	        menuEdit.setText("Edit");
+	        jMenuBar1.add(menuEdit);
+	        setJMenuBar(jMenuBar1);
+		
+		 GroupLayout stratPanelLayout = new GroupLayout(strategyPanel);
+		 strategyPanel.setLayout(stratPanelLayout);
+	        stratPanelLayout.setHorizontalGroup(
+	            stratPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+	            .addGroup(stratPanelLayout.createSequentialGroup()
+	                .addGap(28, 28, 28)
+	                .addGroup(stratPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+	                    .addComponent(buyCustomButton)
+	                    .addComponent(buyRandomButton)
+	                    .addComponent(buyRiseButton)
+	                    .addComponent(buyLowButton))
+	                .addContainerGap(102, Short.MAX_VALUE))
+	        );
+	        stratPanelLayout.setVerticalGroup(
+	            stratPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+	            .addGroup(stratPanelLayout.createSequentialGroup()
+	                .addGap(21, 21, 21)
+	                .addComponent(buyLowButton)
+	                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+	                .addComponent(buyRiseButton)
+	                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+	                .addComponent(buyRandomButton)
+	                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+	                .addComponent(buyCustomButton)
+	                .addContainerGap(30, Short.MAX_VALUE))
+	        );
+
 		
 		GroupLayout layout = new GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
 		
-		layout.setAutoCreateContainerGaps(true);
-		layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)		
-				.addGap(50)
-				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)				
-				.addComponent(stockDisplayPanel3, GroupLayout.PREFERRED_SIZE, 1000, GroupLayout.PREFERRED_SIZE)	
-				.addGroup(layout.createSequentialGroup()
-					.addComponent(stockScrollPane, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
-					.addComponent(stockButton, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-					.addGap(200)
-						.addComponent(strategyPanel2, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE))));
 		
-		layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)	
-			.addGroup(layout.createSequentialGroup()
-					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-				.addComponent(stockScrollPane, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)	
-				.addComponent(stockButton, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-				.addComponent(strategyPanel2, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE))
-			
-				.addComponent(stockDisplayPanel3, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)));
+		layout.setHorizontalGroup(
+	            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+	            .addGroup(layout.createSequentialGroup()
+	            		.addGap(20,200,200)
+	                .addComponent(stockScrollPane, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
+	                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+	                .addComponent(stockButton)
+	                .addGap(20,20,20)
+	                .addComponent(strategyPanel, GroupLayout.PREFERRED_SIZE, 300, GroupLayout.PREFERRED_SIZE)
+	                )
+	            .addComponent(stockDisplayPanel, GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
+	        );
+		
+		layout.setVerticalGroup(
+		            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+		            .addGroup(layout.createSequentialGroup()
+		            		.addContainerGap(23, Short.MAX_VALUE)
+		                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+		                    .addGroup(layout.createSequentialGroup()
+		                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+		                        		
+		                            .addComponent(strategyPanel, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+		                            .addComponent(stockScrollPane, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
+		                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED))
+		                    .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+		                        .addGap(0,50, 100)
+		                        .addComponent(stockButton)
+		                        .addGap(0, 50, 1000)))
+		                .addComponent(stockDisplayPanel, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE))
+		        );
+
 		
 		setResizable(false);
 		pack();
 		
 	}
-	
-	
-	
-	
+
 	public void setStrategy(Strategy s){
 		strategy = s;
 	}
