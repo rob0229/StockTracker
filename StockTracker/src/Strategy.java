@@ -1,4 +1,5 @@
 
+
 public interface Strategy {
-	public String getRecommendation(float percent);
+	public String getRecommendation(int stockIndex);
 }

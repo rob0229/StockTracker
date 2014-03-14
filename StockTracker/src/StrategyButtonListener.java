@@ -9,16 +9,19 @@ import javax.swing.event.ChangeListener;
 
 
 public class StrategyButtonListener implements ActionListener, ChangeListener, ItemListener{
-
 	// Strategy pattern
 	Strategy strategy;
+	
+	StrategyButtonListener(){
+		setStrategy(new BuyLow());
+	}
+	
 	
 	// Object of recommendations
 	ArrayList<Object> advice = new ArrayList<Object>();
 	
 
         public void actionPerformed(ActionEvent e) {
-            //String factoryName = null;
             
             if (e.getActionCommand() == "bl") {
                System.out.println("bl");
@@ -44,12 +47,13 @@ public class StrategyButtonListener implements ActionListener, ChangeListener, I
     	}
     	
     	// Get recommendations
-    	public void displayStrategy(){
+    	public ArrayList<Object> notifyStrategy(ArrayList<Integer> stockIndex){
     		advice.clear();
     		for(int i = 0; i < stockIndex.size(); i++){
-    			float percent = ExcelTest.getPercentChange(stockIndex.get(i));
-    			advice.add(strategy.getRecommendation(percent));
+    			advice.add(strategy.getRecommendation(stockIndex.get(i)));
     		}
+    		
+    		return advice;
     	}	
         
         //Required from super class

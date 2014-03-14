@@ -30,8 +30,10 @@ public class StockGUI extends JFrame {
 	Object[][] addedList;
 	// Object of column names
 	Object[] getColumns;
+	// Object of recommendations
+	ArrayList<Object> advice = new ArrayList<Object>();
 
-	
+	StrategyButtonListener myListener = new StrategyButtonListener();
 	JToggleButton buyLowButton, buyRiseButton, buyRandomButton, buyCustomButton;
 	
 	private boolean clickedStrategy = false;
@@ -96,9 +98,6 @@ public class StockGUI extends JFrame {
 		
 		displayScrollPane.setPreferredSize(new Dimension(980,160));
 		
-		
-		final StrategyButtonListener myListener = new StrategyButtonListener();
-		
 		stockButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
 				boolean check = true;
@@ -120,12 +119,12 @@ public class StockGUI extends JFrame {
 					}
 					
 					
-					clickedStrategy = true;	
-					myListener.displayStrategy();
-					
-					
-					
-					
+					clickedStrategy = true;						
+					advice = myListener.notifyStrategy(stockIndex);
+					for(int i = 0; i < stockIndex.size(); i++){
+						stockModel.setValueAt(advice.get(i), i, 11);
+					}
+						
 				}
 			}
 		});
@@ -188,7 +187,7 @@ public class StockGUI extends JFrame {
 		}
 		
 		if(clickedStrategy){
-			displayStrategy();
+			advice = myListener.notifyStrategy(stockIndex);
 			for(int i = 0; i < stockIndex.size(); i++){
 				stockModel.setValueAt(advice.get(i), i, 11);
 			}
