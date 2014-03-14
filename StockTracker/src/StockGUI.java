@@ -1,11 +1,22 @@
 import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.GroupLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JToggleButton;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.*;
+import javax.swing.table.DefaultTableModel;
+
+
 
 
 public class StockGUI extends JFrame {
@@ -19,11 +30,10 @@ public class StockGUI extends JFrame {
 	Object[][] addedList;
 	// Object of column names
 	Object[] getColumns;
-	// Object of recommendations
-	ArrayList<Object> advice = new ArrayList<Object>();
+
 	
-	// Strategy pattern
-	Strategy strategy;
+	JToggleButton buyLowButton, buyRiseButton, buyRandomButton, buyCustomButton;
+	
 	private boolean clickedStrategy = false;
 	
 	JPanel stockListPanel1;
@@ -46,7 +56,25 @@ public class StockGUI extends JFrame {
 	public void init( final Object[][] addedList, final Object[] getColumns){
 		stockListPanel1 = new JPanel();
 		strategyPanel2 = new JPanel();
-		stockDisplayPanel3 = new JPanel();		    
+		stockDisplayPanel3 = new JPanel();	
+		
+		//Strategy Radio Buttons
+		buyLowButton = new JRadioButton("Buy when stock price decreases");
+		buyRiseButton = new JRadioButton("Buy when stock price increases");
+		buyRandomButton = new JRadioButton("Buy Randomly");
+		buyCustomButton = new JRadioButton("Buy Custom");
+		
+		ButtonGroup stratButtonGroup = new ButtonGroup();
+		stratButtonGroup.add(buyLowButton);
+		stratButtonGroup.add(buyRiseButton);
+		stratButtonGroup.add(buyRandomButton);
+		stratButtonGroup.add(buyCustomButton);
+		
+		buyLowButton.setActionCommand("bl");
+		buyLowButton.setSelected(true);
+		buyRiseButton.setActionCommand("br");
+		buyRandomButton.setActionCommand("brand");
+		buyCustomButton.setActionCommand("bc");
 		
 		//stockTable = new JTable(addedList, getColumns);
 		stockTable = new JTable();
@@ -67,6 +95,9 @@ public class StockGUI extends JFrame {
 		stockDisplayPanel3.setBorder(BorderFactory.createTitledBorder(null, "Stock Display Panel", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION));
 		
 		displayScrollPane.setPreferredSize(new Dimension(980,160));
+		
+		
+		final StrategyButtonListener myListener = new StrategyButtonListener();
 		
 		stockButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
@@ -89,14 +120,8 @@ public class StockGUI extends JFrame {
 					}
 					
 					
-					
-					
-					// Delete later
 					clickedStrategy = true;	
-					setStrategy(new BuyLow());
-					for(int i = 0; i < stockIndex.size(); i++){
-						stockModel.setValueAt(advice.get(i), i, 11);
-					}
+					myListener.displayStrategy();
 					
 					
 					
@@ -104,6 +129,28 @@ public class StockGUI extends JFrame {
 				}
 			}
 		});
+		
+		
+		buyLowButton.addActionListener(myListener);
+		buyLowButton.addChangeListener(myListener);
+		buyLowButton.addItemListener(myListener);
+		
+		buyRiseButton.addActionListener(myListener);
+		buyRiseButton.addChangeListener(myListener);
+		buyRiseButton.addItemListener(myListener);
+		
+		buyRandomButton.addActionListener(myListener);
+		buyRandomButton.addChangeListener(myListener);
+		buyRandomButton.addItemListener(myListener);
+		
+		buyCustomButton.addActionListener(myListener);
+		buyCustomButton.addChangeListener(myListener);
+		buyCustomButton.addItemListener(myListener);
+		
+		strategyPanel2.add(buyLowButton);
+		strategyPanel2.add(buyRiseButton);
+		strategyPanel2.add(buyRandomButton);
+		strategyPanel2.add(buyCustomButton);
 		
 		GroupLayout layout = new GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
@@ -151,23 +198,4 @@ public class StockGUI extends JFrame {
 		super.revalidate();
 			
 	}
-	
-	
-	// Radio buttons to set strategy
-	public void setStrategy(Strategy s){
-		strategy = s;
-		
-		clickedStrategy = true;
-		displayStrategy();
-	}
-	
-	
-	// Get recommendations and display in table
-	public void displayStrategy(){
-		advice.clear();
-		for(int i = 0; i < stockIndex.size(); i++){
-			float percent = ExcelTest.getPercentChange(stockIndex.get(i));
-			advice.add(strategy.getRecommendation(percent));
-		}
-	}	
 }
