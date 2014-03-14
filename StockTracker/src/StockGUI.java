@@ -1,6 +1,7 @@
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -10,6 +11,7 @@ import javax.swing.table.*;
 public class StockGUI extends JFrame {
 	private String[] symbolNameHeader = {"Symbol Name"};
 	private int[] clickedRows;
+	private ArrayList<Integer> stockIndex = new ArrayList<Integer>();
 	
 //	private Object[][] symbolName = {{"GOOGL"},{ "APPL"}, };
 	JPanel stockListPanel1;
@@ -22,7 +24,7 @@ public class StockGUI extends JFrame {
 	JButton stockButton = new JButton("Add Stocks");
 	Object[][] addedList;
 	Object[] getColumns;
-	DefaultTableModel model;
+	DefaultTableModel stockModel;
 	
 	StockGUI(Object[][] getStockList, String[] getColumnLabels){		
 		addedList = getStockList;
@@ -37,12 +39,12 @@ public class StockGUI extends JFrame {
 		
 		//stockTable = new JTable(addedList, getColumns);
 		stockTable = new JTable();
-		model = (DefaultTableModel) stockTable.getModel();
+		stockModel = (DefaultTableModel) stockTable.getModel();
 		for(int i = 0; i < getColumns.length; i++){
-			model.addColumn(getColumns[i]);	
+			stockModel.addColumn(getColumns[i]);	
 		}
 		
-		symbolTable = new JTable(addedList, symbolNameHeader) ;
+		symbolTable = new JTable(addedList, symbolNameHeader);
 		displayScrollPane = new JScrollPane(stockTable);		
 		stockScrollPane = new JScrollPane(symbolTable);
 		
@@ -57,13 +59,24 @@ public class StockGUI extends JFrame {
 		
 		stockButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
+				boolean check = true;
+				
 				clickedRows = symbolTable.getSelectedRows();
 				
 				for(int i = 0; i < clickedRows.length; i++){
-					System.out.print("Selected rows are " + clickedRows[i] + " ");
-					model.addRow(addedList[clickedRows[i]]);
+					for (int j = 0; j < stockIndex.size(); j++){
+						if(stockIndex.get(j) == clickedRows[i]){
+							check = false;
+						}
+					}
 				}
-				System.out.println("");
+				
+				if(check){
+					for(int i = 0; i < clickedRows.length; i++){
+						stockModel.addRow(addedList[clickedRows[i]]);
+						stockIndex.add(clickedRows[i]);
+					}
+				}
 			}
 		});
 		
@@ -96,11 +109,13 @@ public class StockGUI extends JFrame {
 	}
 	
 	public void refreshTable(Object[][] stockList){
-		for(int i = 0; i < clickedRows.length; i++){
+		for(int i = 0; i < stockIndex.size(); i++){
 			for(int j = 0; j < ExcelTest.totalcols; j++){
-				stockTable.setValueAt(stockList[i][j], i, j);
+				stockModel.setValueAt(stockList[stockIndex.get(i)][j], i, j);
 			}
-		}	
+		}
+		super.repaint();
+		super.revalidate();
 	}
 
 }
