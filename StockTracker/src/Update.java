@@ -6,7 +6,7 @@ public class Update {
 	public static void main(String[] args) {
 		final ExcelTest excel = new ExcelTest();
 	    final StockGUI gui = new StockGUI(excel.getStockList(), excel.getColumnNames());
-		gui.setVisible(true);
+	    gui.setVisible(true);
 		
 		int period = 30 * 1000; // repeat every 60 sec
 

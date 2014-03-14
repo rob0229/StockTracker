@@ -174,4 +174,24 @@ public class ExcelTest {
 		
 		return change;
 	}
+	
+	public static String getSymbol(int i){
+		System.out.println("Stock time "+stockList[i][5] );
+		return stockList[i][5];
+		
+	}
+	
+	public static Time getTime(int i){
+		String stime = stockList[i][5];
+		long t = 11;
+		
+		System.out.println("Stock time "+stockList[i][5] );
+		
+		
+		Time time = new Time(t);
+		
+		return time;
+		
+	}
+	
 }
