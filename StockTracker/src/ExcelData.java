@@ -1,5 +1,6 @@
 import java.sql.*;
 
+import java.awt.Color;
 import java.io.*;
 import java.net.URL;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -7,18 +8,16 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-
-public class ExcelTest {
+public class ExcelData {
 	protected String[] rawdata;
 	protected static int totalrows;
 	protected static int totalcols;
-	protected static String[][] stockList; 
-	protected static String[] columnNames = 
-		{"Symbol", "Current", "Change", "Pct Change", "Date", 
-		"Time", "High", "Low", "Prev. Close", "Volume", "Name", "Expert Advice"};
-	
-	
-	ExcelTest() {
+	protected static String[][] stockList;
+	protected static String[] columnNames = { "Symbol", "Current", "Change",
+			"Pct Change", "Date", "Time", "High", "Low", "Prev. Close",
+			"Volume", "Name", "Expert Advice" };
+
+	ExcelData() {
 		try {
 			// Load the JDBC-ODBC bridge driver
 			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
@@ -53,7 +52,7 @@ public class ExcelTest {
 			System.err.print("Exception: ");
 			System.err.println(ex.getMessage());
 		}
-		
+
 		rawdata = new String[totalrows + 1];
 		stockList = new String[totalrows][];
 		update();
@@ -69,57 +68,14 @@ public class ExcelTest {
 		for (int i = 0; i < totalrows; i++) {
 			for (int j = 0; j < totalcols; j++) {
 				stockList[i][j] = (stockList[i][j]).replace("\"", "");
-//				System.out.print(stockList[i][j] + " ");
+			
 			}
-//			System.out.println("");
+		
 		}
 	}
 
 	public void update() {
-//		try {
-//			System.out.println("Updating " + totalrows + " stocks");
-//			
-//			// Read in file
-//			FileInputStream file = new FileInputStream(new File("Stocks.xls"));
-//
-//			// Get the workbook instance for XLS file
-//			HSSFWorkbook workbook = new HSSFWorkbook(file);
-//
-//			// Get first sheet from the workbook
-//			HSSFSheet sheet = workbook.getSheetAt(0);
-//
-//			// Rows start at 0, cells start at 0
-//			for (int i = 1; i < totalrows + 1; i++) {
-//				HSSFRow row = sheet.getRow(i);
-//				HSSFCell cell = row.getCell(1);
-//
-//				String generate_URL = "http://finance.yahoo.com/d/quotes.txt?s="
-//						+ cell.getStringCellValue() + "&f=sl1c1p2d1t1hgpvn";
-//				URL yahoo = new URL(generate_URL);
-//		        BufferedReader in = new BufferedReader(
-//		        new InputStreamReader(yahoo.openStream()));
-//		        String inputLine = in.readLine();
-//
-//				// Put results into first column
-//				cell = row.getCell(0);
-//				cell.setCellValue(inputLine);
-//				// System.out.println(cell.getStringCellValue());
-//				System.out.print(i + " ");
-//			}
-//			System.out.println("");
-//			FileOutputStream fileOut = new FileOutputStream("Stocks.xls");
-//			workbook.write(fileOut);
-//			fileOut.close();
-//			file.close();
-//
-//			System.out.println("Done");
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-		
+
 		try {
 			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
 			Connection con = DriverManager.getConnection("jdbc:odbc:COSC330");
@@ -133,7 +89,7 @@ public class ExcelTest {
 				rawdata[index] = columnValue;
 				index++;
 			}
-
+			
 			rs.close();
 			st.close();
 			con.close();
@@ -141,54 +97,100 @@ public class ExcelTest {
 			System.err.print("Exception: ");
 			System.err.println(ex.getMessage());
 		}
-
 	}
-	
-	//getter for stock list
-	public Object[][] getStockList(){
+
+	// getter for stock list
+	public Object[][] getStockList() {
 		Object[][] stockObject = new Object[totalrows][totalcols];
-		
+
 		for (int i = 0; i < totalrows; i++) {
 			for (int j = 0; j < totalcols; j++) {
 				stockObject[i][j] = stockList[i][j];
-//				System.out.print(stockObject[i][j] + " ");
+
+				// System.out.print(stockObject[i][j] + " ");
 			}
-//			System.out.println("");
+			// System.out.println("");
 		}
 		return stockObject;
-		
+
 	}
-	
-	//getter for column names
-	public String[] getColumnNames(){
+
+	// getter for column names
+	public String[] getColumnNames() {
 		return columnNames;
 	}
-	
-	//getter for percent change
-	public static float getPercentChange(int index){
+
+	// getter for percent change
+	public static float getPercentChange(int index) {
 		float change = 0;
 		String data = stockList[index][3];
 		data = data.replace("%", "");
-		
+
 		change = Float.valueOf(data);
-		
+
 		return change;
 	}
-	
-	public static String getSymbol(int i){
+
+	public static String getSymbol(int i) {
 		String symbol = stockList[i][0];
 		return symbol;
 	}
-	
-	public static String getTime(int i){
+
+	public static String getTime(int i) {
 		String time = stockList[i][5];
 		return time;
-		
+
 	}
-	
-	public static float getVolume(int i){
-		
+
+	public static float getVolume(int i) {
+
 		return Float.valueOf(stockList[i][9]);
 	}
-	
+
 }
+
+// Alternate Method for retrieving Stock data
+
+// try {
+// System.out.println("Updating " + totalrows + " stocks");
+//
+// // Read in file
+// FileInputStream file = new FileInputStream(new File("Stocks.xls"));
+//
+// // Get the workbook instance for XLS file
+// HSSFWorkbook workbook = new HSSFWorkbook(file);
+//
+// // Get first sheet from the workbook
+// HSSFSheet sheet = workbook.getSheetAt(0);
+//
+// // Rows start at 0, cells start at 0
+// for (int i = 1; i < totalrows + 1; i++) {
+// HSSFRow row = sheet.getRow(i);
+// HSSFCell cell = row.getCell(1);
+//
+// String generate_URL = "http://finance.yahoo.com/d/quotes.txt?s="
+// + cell.getStringCellValue() + "&f=sl1c1p2d1t1hgpvn";
+// URL yahoo = new URL(generate_URL);
+// BufferedReader in = new BufferedReader(
+// new InputStreamReader(yahoo.openStream()));
+// String inputLine = in.readLine();
+//
+// // Put results into first column
+// cell = row.getCell(0);
+// cell.setCellValue(inputLine);
+// // System.out.println(cell.getStringCellValue());
+// System.out.print(i + " ");
+// }
+// System.out.println("");
+// FileOutputStream fileOut = new FileOutputStream("Stocks.xls");
+// workbook.write(fileOut);
+// fileOut.close();
+// file.close();
+//
+// System.out.println("Done");
+// } catch (FileNotFoundException e) {
+// e.printStackTrace();
+//
+// } catch (IOException e) {
+// e.printStackTrace();
+// }

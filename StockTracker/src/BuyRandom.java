@@ -3,8 +3,8 @@ import java.sql.Time;
 
 public class BuyRandom implements Strategy{
 	public String getRecommendation(int stockIndex) {
-		String symbol = ExcelTest.getSymbol(stockIndex);
-		String time = ExcelTest.getTime(stockIndex);
+		String symbol = ExcelData.getSymbol(stockIndex);
+		String time = ExcelData.getTime(stockIndex);
 		
 		String subtime1;
 		String subtime2;

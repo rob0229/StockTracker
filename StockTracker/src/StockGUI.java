@@ -1,3 +1,5 @@
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +23,7 @@ import javax.swing.JToggleButton;
 import javax.swing.KeyStroke;
 import javax.swing.LayoutStyle;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -287,6 +290,7 @@ public class StockGUI extends JFrame {
 		advice.clear();
 		for(int i = 0; i < stockIndex.size(); i++){
 			advice.add(strategy.getRecommendation(stockIndex.get(i)));
+			
 		}
 		
 		return advice;
@@ -294,8 +298,9 @@ public class StockGUI extends JFrame {
 	
 	public void refreshTable(Object[][] stockList){
 		for(int i = 0; i < stockIndex.size(); i++){
-			for(int j = 0; j < ExcelTest.totalcols; j++){
+			for(int j = 0; j < ExcelData.totalcols; j++){
 				stockModel.setValueAt(stockList[stockIndex.get(i)][j], i, j);
+				
 			}
 		}
 		
@@ -303,6 +308,9 @@ public class StockGUI extends JFrame {
 			advice = notifyStrategy(stockIndex);
 			for(int i = 0; i < stockIndex.size(); i++){
 				stockModel.setValueAt(advice.get(i), i, 11);
+				
+				
+				
 			}
 		}
 		
@@ -311,5 +319,4 @@ public class StockGUI extends JFrame {
 			
 	}
 	
-
-}
+}	  

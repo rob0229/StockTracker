@@ -4,7 +4,7 @@ import java.util.TimerTask;
 public class Update {
 
 	public static void main(String[] args) {
-		final ExcelTest excel = new ExcelTest();
+		final ExcelData excel = new ExcelData();
 	    final StockGUI gui = new StockGUI(excel.getStockList(), excel.getColumnNames());
 	    gui.setVisible(true);
 		
