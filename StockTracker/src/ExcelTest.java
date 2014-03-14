@@ -69,9 +69,9 @@ public class ExcelTest {
 		for (int i = 0; i < totalrows; i++) {
 			for (int j = 0; j < totalcols; j++) {
 				stockList[i][j] = (stockList[i][j]).replace("\"", "");
-				System.out.print(stockList[i][j] + " ");
+//				System.out.print(stockList[i][j] + " ");
 			}
-			System.out.println("");
+//			System.out.println("");
 		}
 	}
 
@@ -163,8 +163,15 @@ public class ExcelTest {
 	public String[] getColumnNames(){
 		return columnNames;
 	}
-
 	
-
-	
+	//getter for percent change
+	public static float getPercentChange(int index){
+		float change = 0;
+		String data = stockList[index][3];
+		data = data.replace("%", "");
+		
+		change = Float.valueOf(data);
+		
+		return change;
+	}
 }

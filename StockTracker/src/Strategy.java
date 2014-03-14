@@ -1,4 +1,4 @@
 
 public interface Strategy {
-	public void getRecommendation();
+	public String getRecommendation(float percent);
 }

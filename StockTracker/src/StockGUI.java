@@ -9,11 +9,23 @@ import javax.swing.table.*;
 
 
 public class StockGUI extends JFrame {
+	// Title for stock list
 	private String[] symbolNameHeader = {"Symbol Name"};
+	// Keeps track of selected items in list
 	private int[] clickedRows;
+	// Creates index of where in the excel sheet selected stocks a re
 	private ArrayList<Integer> stockIndex = new ArrayList<Integer>();
+	// Object of stock list pulled from excel
+	Object[][] addedList;
+	// Object of column names
+	Object[] getColumns;
+	// Object of recommendations
+	ArrayList<Object> advice = new ArrayList<Object>();
 	
-//	private Object[][] symbolName = {{"GOOGL"},{ "APPL"}, };
+	// Strategy pattern
+	Strategy strategy;
+	private boolean clickedStrategy = false;
+	
 	JPanel stockListPanel1;
 	JPanel strategyPanel2;
 	JPanel stockDisplayPanel3;
@@ -22,8 +34,7 @@ public class StockGUI extends JFrame {
 	JScrollPane displayScrollPane;
 	JScrollPane stockScrollPane;
 	JButton stockButton = new JButton("Add Stocks");
-	Object[][] addedList;
-	Object[] getColumns;
+
 	DefaultTableModel stockModel;
 	
 	StockGUI(Object[][] getStockList, String[] getColumnLabels){		
@@ -76,6 +87,20 @@ public class StockGUI extends JFrame {
 						stockModel.addRow(addedList[clickedRows[i]]);
 						stockIndex.add(clickedRows[i]);
 					}
+					
+					
+					
+					
+					// Delete later
+					clickedStrategy = true;	
+					setStrategy(new BuyLow());
+					for(int i = 0; i < stockIndex.size(); i++){
+						stockModel.setValueAt(advice.get(i), i, 11);
+					}
+					
+					
+					
+					
 				}
 			}
 		});
@@ -114,8 +139,35 @@ public class StockGUI extends JFrame {
 				stockModel.setValueAt(stockList[stockIndex.get(i)][j], i, j);
 			}
 		}
+		
+		if(clickedStrategy){
+			displayStrategy();
+			for(int i = 0; i < stockIndex.size(); i++){
+				stockModel.setValueAt(advice.get(i), i, 11);
+			}
+		}
+		
 		super.repaint();
 		super.revalidate();
+			
 	}
-
+	
+	
+	// Radio buttons to set strategy
+	public void setStrategy(Strategy s){
+		strategy = s;
+		
+		clickedStrategy = true;
+		displayStrategy();
+	}
+	
+	
+	// Get recommendations and display in table
+	public void displayStrategy(){
+		advice.clear();
+		for(int i = 0; i < stockIndex.size(); i++){
+			float percent = ExcelTest.getPercentChange(stockIndex.get(i));
+			advice.add(strategy.getRecommendation(percent));
+		}
+	}	
 }
