@@ -176,20 +176,12 @@ public class ExcelTest {
 	}
 	
 	public static String getSymbol(int i){
-		System.out.println("Stock time "+stockList[i][5] );
-		return stockList[i][5];
-		
+		String symbol = stockList[i][0];
+		return symbol;
 	}
 	
-	public static Time getTime(int i){
-		String stime = stockList[i][5];
-		long t = 11;
-		
-		System.out.println("Stock time "+stockList[i][5] );
-		
-		
-		Time time = new Time(t);
-		
+	public static String getTime(int i){
+		String time = stockList[i][5];
 		return time;
 		
 	}

@@ -68,6 +68,11 @@ public class StockGUI extends JFrame {
 		buyRandomButton = new JRadioButton("Buy Randomly");
 		buyCustomButton = new JRadioButton("Buy Custom");
 		
+		buyLowButton.setEnabled(false);
+		buyRiseButton.setEnabled(false);
+		buyRandomButton.setEnabled(false);
+		buyCustomButton.setEnabled(false);
+		
 		ButtonGroup stratButtonGroup = new ButtonGroup();
 		stratButtonGroup.add(buyLowButton);
 		stratButtonGroup.add(buyRiseButton);
@@ -106,6 +111,14 @@ public class StockGUI extends JFrame {
 				
 				clickedRows = symbolTable.getSelectedRows();
 				
+				if(clickedRows.length > 0)
+				{
+					buyLowButton.setEnabled(true);
+					buyRiseButton.setEnabled(true);
+					buyRandomButton.setEnabled(true);
+					buyCustomButton.setEnabled(true);
+				}
+				
 				for(int i = 0; i < clickedRows.length; i++){
 					for (int j = 0; j < stockIndex.size(); j++){
 						if(stockIndex.get(j) == clickedRows[i]){
@@ -135,15 +148,12 @@ public class StockGUI extends JFrame {
 		    public void actionPerformed(ActionEvent e) {
 		        
 		        if (e.getActionCommand() == "bl") {
-		           System.out.println("bl");
 		           setStrategy(new BuyLow());
 		            
 		        }else if(e.getActionCommand() == "br") {
-		        	System.out.println("br");
 		        	setStrategy(new BuyRise());
 		        }
 		        else if(e.getActionCommand() == "brand") {
-		        	System.out.println("brand");
 		        	setStrategy(new BuyRandom());
 		        }
 		        else {
@@ -195,6 +205,21 @@ public class StockGUI extends JFrame {
 	}
 	
 	
+	
+	
+	public void setStrategy(Strategy s){
+		strategy = s;
+	}
+	
+	public ArrayList<Object> notifyStrategy(ArrayList<Integer> stockIndex){
+		advice.clear();
+		for(int i = 0; i < stockIndex.size(); i++){
+			advice.add(strategy.getRecommendation(stockIndex.get(i)));
+		}
+		
+		return advice;
+	}
+	
 	public void refreshTable(Object[][] stockList){
 		for(int i = 0; i < stockIndex.size(); i++){
 			for(int j = 0; j < ExcelTest.totalcols; j++){
@@ -214,16 +239,5 @@ public class StockGUI extends JFrame {
 			
 	}
 	
-	public void setStrategy(Strategy s){
-		strategy = s;
-	}
-	
-	public ArrayList<Object> notifyStrategy(ArrayList<Integer> stockIndex){
-		advice.clear();
-		for(int i = 0; i < stockIndex.size(); i++){
-			advice.add(strategy.getRecommendation(stockIndex.get(i)));
-		}
-		
-		return advice;
-	}
+
 }
