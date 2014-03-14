@@ -1,23 +1,24 @@
-import java.net.URL;
 import java.sql.*;
-import java.io.*;
 
+import java.io.*;
+import java.net.URL;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
+
 public class ExcelTest {
 	protected String[] rawdata;
-	protected int totalrows;
-	protected int totalcols;
+	protected static int totalrows;
+	protected static int totalcols;
 	protected static String[][] stockList; 
-	protected static String[] columnNames = {"Stock Symbol", "Current Price", "Change", "Change in %", "Date", "Time", "High", "Low", "Yesterdays Close", "Volume","Name"};
+	protected static String[] columnNames = 
+		{"Symbol", "Current", "Change", "Pct Change", "Date", 
+		"Time", "High", "Low", "Prev. Close", "Volume", "Name", "Expert Advice"};
 	
 	
 	ExcelTest() {
-		
-		
 		try {
 			// Load the JDBC-ODBC bridge driver
 			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
@@ -118,7 +119,7 @@ public class ExcelTest {
 //		} catch (IOException e) {
 //			e.printStackTrace();
 //		}
-
+		
 		try {
 			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
 			Connection con = DriverManager.getConnection("jdbc:odbc:COSC330");
