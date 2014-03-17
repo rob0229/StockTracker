@@ -65,6 +65,7 @@ public class StockGUI extends JFrame {
 
 	DefaultTableModel stockModel;
 	
+	//constructor
 	StockGUI(Object[][] getStockList, String[] getColumnLabels){		
 		addedList = getStockList;
 		getColumns = getColumnLabels;
