@@ -175,7 +175,6 @@ public class StockGUI extends JFrame {
 		        	setStrategy(new BuyRandom());
 		        }
 		        else {
-		        	System.out.println("custom");
 		        	setStrategy(new BuyCustom());
 		        } 
 		        
