@@ -251,11 +251,11 @@ public class StockGUI extends JFrame {
 	            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 	            .addGroup(layout.createSequentialGroup()
 	            		.addGap(20,200,200)
-	                .addComponent(stockScrollPane, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
+	                .addComponent(stockScrollPane, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
 	                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
 	                .addComponent(stockButton)
 	                .addGap(20,20,20)
-	                .addComponent(strategyPanel, GroupLayout.PREFERRED_SIZE, 300, GroupLayout.PREFERRED_SIZE)
+	                .addComponent(strategyPanel, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
 	                )
 	            .addComponent(stockDisplayPanel, GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
 	        );
@@ -271,9 +271,9 @@ public class StockGUI extends JFrame {
 		                            .addComponent(stockScrollPane, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
 		                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED))
 		                    .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-		                        .addGap(0,50, 100)
+		                        .addGap(0,150, 1000)
 		                        .addComponent(stockButton)
-		                        .addGap(0, 50, 1000)))
+		                        .addGap(0, 5, 1000)))
 		                .addComponent(stockDisplayPanel, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE))
 		        );
 
